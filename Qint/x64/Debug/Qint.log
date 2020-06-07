@@ -1,0 +1,24 @@
+﻿  BigInt.cpp
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\bigint.h(34,29): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\bigint.h(35,26): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\BigInt.cpp(29,33): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\BigInt.cpp(228,15): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\BigInt.cpp(233,20): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\BigInt.cpp(250,16): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\BigInt.cpp(272,20): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\BigInt.cpp(276,25): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\BigInt.cpp(290,17): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\BigInt.cpp(305,13): warning C4244: '=': conversion from '__int64' to 'int', possible loss of data
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\BigInt.cpp(321,9): warning C4244: 'return': conversion from '__int64' to 'int', possible loss of data
+  main.cpp
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\bigint.h(34,29): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\bigint.h(35,26): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+  Qint.cpp
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\bigint.h(34,29): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\bigint.h(35,26): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\Qint.cpp(40,33): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\Qint.cpp(91,34): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\Qint.cpp(92,44): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+D:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\Qint.cpp(268,29): warning C4805: '==': unsafe mix of type 'bool' and type 'int' in operation
+  Generating Code...
+  Qint.vcxproj -> D:\sources\IrisStream\Computer Architecture and Assembly\Qint\x64\Debug\Qint.exe
