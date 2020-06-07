@@ -1,0 +1,4 @@
+﻿  main.cpp
+G:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\bigint.h(34,29): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+G:\sources\IrisStream\Computer Architecture and Assembly\Qint\Qint\bigint.h(35,26): warning C4244: 'initializing': conversion from 'double' to 'const int', possible loss of data
+  Qint.vcxproj -> G:\sources\IrisStream\Computer Architecture and Assembly\Qint\x64\Debug\Qint.exe
