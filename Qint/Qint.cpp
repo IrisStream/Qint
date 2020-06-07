@@ -6,7 +6,7 @@ bool Qint::getBit(int pos)
 }
 
 void Qint::setBit(int pos, bool value)
-{
+{ 
 	if (getBit(pos) == value)
 		return;
 	data[pos / 32] ^= (1 << (pos % 32));
@@ -104,7 +104,10 @@ Qint::Qint(const Qint& other) : Qint()
 std::string Qint::getBin()
 {
 	string ans;
-	for (int i = 127; i >= 0; i--)
+	int i = 127;
+	while (getBit(i) == false)
+		i--;
+	for (; i >= 0; i--)
 		ans = ans + char('0' + getBit(i));
 	return ans;
 }
@@ -147,7 +150,19 @@ std::string Qint::getHex()
 			digit = 0;
 		}
 	}
+	while (ans[0] == '0')
+		ans.erase(ans.begin());
 	return ans;
+}
+
+std::string Qint::getNum(int base)
+{
+	if (base == 2)
+		return this->getBin();
+	else if (base == 10)
+		return this->getDec();
+	else
+		return this->getHex();
 }
 
 Qint& Qint::operator=(const Qint& other)
@@ -163,58 +178,34 @@ Qint& Qint::operator=(const Qint& other)
 Qint Qint::operator>>(int times)
 {
 	Qint ans(*this);
-
 	times = std::min(times, 128);
-	for (int i = 0; i < 128 - times; i++)
-		ans.setBit(i, ans.getBit(i + times));
-	for (int i = 128 - times; i < 128; i++)
+	for (int i = times; i < 128; i++)
+		ans.setBit(i - times, ans.getBit(i));
+	for (int i = 127; i > 127 - times; i--)
 		ans.setBit(i, 0);
-
 	return ans;
 }
 
 Qint Qint::operator<<(int times)
 {
 	Qint ans(*this);
-
 	times = std::min(times, 128);
-	for (int i = 127; i >= times; i--)
-		ans.setBit(i, ans.getBit(i - times));
-	for (int i = times - 1; i >= 0; i--)
+	for (int i = 127-times; i >=0; i--)
+		ans.setBit(i + times, ans.getBit(i));
+	for (int i = 0; i < times; i++)
 		ans.setBit(i, 0);
-
 	return ans;
 }
 
 Qint Qint::sar(int times)
 {
-	Qint ans(*this);
-
-	//It's useless when we shift over 128 times 
+	Qint ans(*this); 
+	bool sign = this->getBit(127);
 	times = std::min(times, 128);
-
-	/*
-	We need to shift entire data[i] to data[i-1] for times/32 number of times
-	After that we'll only have 4 - times/4 number less
-	We need to reset all other number to 0
-	*/
-	for (int i = 0; i < 4 - times / 32; i++)
-		ans.data[i] = ans.data[i + times / 32];
-	for (int i = 4 - times / 32; i < 4; i++)
-		ans.data[i] = 0;
-	times %= 32;
-
-	if (times == 0)
-		return ans;
-
-	long long memo = 0;
-	for (int i = 3; i >= 0; i--)
-	{
-		memo = memo | ans.data[i];
-		ans.data[i] = memo >> times;
-		memo = memo << (64 - times) >> (32 - times);
-	}
-
+	for (int i = times; i < 128; i++)
+		ans.setBit(i - times, ans.getBit(i));
+	for (int i = 127; i > 127 - times; i--)
+		ans.setBit(i, sign);
 	return ans;
 }
 
@@ -229,28 +220,18 @@ Qint Qint::operator~()
 Qint Qint::rol()
 {
 	Qint ans(*this);
-	int memo = getBit(ans.data[3],31);
-	for (int i = 0; i < 4; i++)
-	{
-		int tmp = getBit(ans.data[i], 31);
-		ans.data[i] = (ans.data[i] << 1) | memo;
-		memo = tmp;
-	}
+	bool memo = ans.getBit(127);
+	ans = ans << 1;
+	ans.setBit(0, memo);
 	return ans;
 }
 
 Qint Qint::ror()
 {
 	Qint ans(*this);
-	int memo = getBit(ans.data[0], 0);
-	for (int i = 3; i >= 0; i--)
-	{
-		int tmp = getBit(ans.data[0], 0);
-		ans.data[i] = (ans.data[i] >> 1);
-		setBit(ans.data[i], 31, 0);
-		ans.data[i] |= (memo << 31);
-		memo = tmp;
-	}
+	bool memo = ans.getBit(0);
+	ans = ans >> 1;
+	ans.setBit(127, memo);
 	return ans;
 }
 
@@ -308,28 +289,30 @@ Qint operator-(const Qint& a, const Qint& b)
 	return c;
 }
 
-Qint operator*(const Qint& a, const Qint& b)
+Qint operator*(Qint& a, Qint& b)
 {
-	bool memo = 0;
-	Qint outSideRange;
-	Qint ans(a);
+	Qint ans;
 	for (int i = 0; i < 128; i++)
 	{
-		int tmp = ans.getBit(0) * 2 + memo;
-		if (tmp == 2)
-			outSideRange = outSideRange - b;
-		else if (tmp == 1)
-			outSideRange = outSideRange + b;
-		memo = ans.getBit(0);
-		ans = (ans >> 1);
-		ans.setBit(127, outSideRange.getBit(0));
-		outSideRange = outSideRange.sar(1);
+		if (b.getBit(i) == true)
+			ans = ans + (a << i);
 	}
 	return ans;
 }
 
-Qint operator/(const Qint& a, const Qint& b)
+Qint operator/(Qint& a, Qint& b)
 {
+	int sign = 1;
+	if (a.isNegative())
+	{
+		a.toNegative();
+		sign *= -1;
+	}
+	if (b.isNegative())
+	{
+		b.toNegative();
+		sign *= -1;
+	}
 	Qint rest;
 	Qint ans(a);
 	if (ans.isNegative())
@@ -350,6 +333,8 @@ Qint operator/(const Qint& a, const Qint& b)
 			ans.setBit(0, 1);
 		}
 	}
+	if (sign == -1)
+		ans.toNegative();
 	return ans;
 }
 

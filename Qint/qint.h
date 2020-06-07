@@ -25,14 +25,14 @@ public:
 	std::string getBin();	//DONE
 	std::string getDec();	//DONE
 	std::string getHex();	//DONE
-
+	std::string getNum(int);  //DONE
 	//OPERATOR
 	//1.0
 	Qint& operator=(const Qint&);								//DONE
 	friend Qint operator+(const Qint&, const Qint&);			//DONE
 	friend Qint operator-(const Qint&, const Qint&);			//DONE
-	friend Qint operator*(const Qint&, const Qint&);			//DONE
-	friend Qint operator/(const Qint&, const Qint&);			//DONE
+	friend Qint operator*(Qint&, Qint&);			//DONE
+	friend Qint operator/(Qint&, Qint&);			//DONE
 	
 	//2.0
 	Qint operator >>(int);										//DONE
